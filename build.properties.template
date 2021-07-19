@@ -1,0 +1,9 @@
+
+# fork del fuente de ADempiere
+adempiere.trunk=/home/workspace/glpa/adempiere
+
+# adempiere home compilado
+adempiere.home=/opt/Apps/Adempiere
+
+# indica si al final de la compilacion instalara en adempiere home
+install.Withholding=true

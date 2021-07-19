@@ -16,16 +16,14 @@
 	<!--
 		Establece las propiedades globales para esta constuccion,
 		adempiere.trunk donde esta el fuente del fork y adempiere.home
-		donde esta el adempiere compilado:
-		
-		adempiere.trunk=/home/workspace/glpa/adempiere
-		install.Withholding=false
-		adempiere.home=/opt/Apps/Adempiere
+		donde esta el adempiere compilado, usar build.properties.template
+		como base
 	-->
 	<property file="build.properties"/>
 
-	<!--import file="${adempiere.trunk}/utils_dev/properties.xml"/-->	
+
 	<property name="base" location="base"/>
+
 	<property name="srcZK" location="zkwebui/WEB-INF/classes"/>
 	<property name="buildZK" location="buildZK"/>
 	<property name="buildSwing" location="buildSwing"/>
@@ -78,7 +76,8 @@
 	<target name="compileSwing" depends="init" description="compile the source">
 		<echo message="Crear compilados para el cliente Swing" />
 		<!-- Compile the java code from ${base} into ${buildSwing} -->
-		<javac target="1.8" encoding="${env.ENCODING}" srcdir="${base}" destdir="${buildSwing}" includeAntRuntime="false" deprecation="off">
+		<javac target="1.8" encoding="${env.ENCODING}" destdir="${buildSwing}" includeAntRuntime="false" deprecation="off">
+			<src path="${base}"/>
 			<classpath refid="lib.class.path"/>
 		</javac>
 	</target>
@@ -125,7 +124,7 @@
 	</target>
 
 
-	<target name="installCustom" depends="distCustomization" description="Instalando localización en el directorio de ADempiere" if="${isInstall}">
+	<target name="installCustom" description="Instalando localización en el directorio de ADempiere" if="${isInstall}">
 		<echo message="Instala los Withholding .jar en packages y zkpackages de Adempiere home" />
 
 		<!-- Elimina los directorios viejos adempiere home ya que no sobreescribe -->
