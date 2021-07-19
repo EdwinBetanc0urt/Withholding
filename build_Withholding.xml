@@ -1,4 +1,4 @@
-<project name="Withholding" default="installCustom" basedir=".">
+<project name="Withholding" default="distCustomization" basedir=".">
 	<description>
 		Building Withholding.jar
 		by:
@@ -19,6 +19,7 @@
 		donde esta el adempiere compilado:
 		
 		adempiere.trunk=/home/workspace/glpa/adempiere
+		install.Withholding=false
 		adempiere.home=/opt/Apps/Adempiere
 	-->
 	<property file="build.properties"/>
@@ -55,8 +56,7 @@
 	</path>
 
 
-	<target name="clean"
-		description="clean up" >
+	<target name="clean" description="clean up">
 		<echo message="Eliminar compilados anteriores"/>
 		<!-- Delete the ${build} and ${dist} directory trees -->
 		<delete dir="${buildZK}"/>
@@ -117,11 +117,20 @@
 
 		<delete dir="${buildZK}"/>
 		<delete dir="${buildSwing}"/>
+
+		<!-- Instala en el direcciotio de adempiere home si install.Withholding esta en true -->
+		<antcall target="installCustom">
+			<param name="isInstall" value="${install.Withholding}"/>
+		</antcall>
 	</target>
 
 
-	<target name="installCustom" depends="distCustomization" description="Instalando localización en el directorio de ADempiere">
-		<echo message="Instala los .jar en packages y zkpackages de Adempiere home" />
+	<target name="installCustom" depends="distCustomization" description="Instalando localización en el directorio de ADempiere" if="${isInstall}">
+		<echo message="Instala los Withholding .jar en packages y zkpackages de Adempiere home" />
+
+		<!-- Elimina los directorios viejos adempiere home ya que no sobreescribe -->
+		<delete dir="${adempiere.home}/${packageSwing}"/>
+		<delete dir="${adempiere.home}/${packageZK}"/>
 
 		<!-- Crea los directorios en adempiere home -->
 		<mkdir dir="${adempiere.home}/${packageSwing}"/>
