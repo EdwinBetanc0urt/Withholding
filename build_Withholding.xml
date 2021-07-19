@@ -76,7 +76,7 @@
 	<target name="compileSwing" depends="init" description="compile the source">
 		<echo message="Crear compilados para el cliente Swing" />
 		<!-- Compile the java code from ${base} into ${buildSwing} -->
-		<javac target="1.8" encoding="${env.ENCODING}" destdir="${buildSwing}" includeAntRuntime="false" deprecation="off">
+		<javac target="1.8" encoding="${env.ENCODING}" destdir="${buildSwing}" includeAntRuntime="false" deprecation="on">
 			<src path="${base}"/>
 			<classpath refid="lib.class.path"/>
 		</javac>
@@ -90,7 +90,7 @@
 		<mkdir dir="${srcZK}"/>
 
 		<!-- Compile the java code from ${srcZK} into ${buildZK} -->
-		<javac target="1.8" encoding="${env.ENCODING}" srcdir="${srcZK}" destdir="${buildZK}/WEB-INF/classes" includeAntRuntime="false" deprecation="off">
+		<javac target="1.8" encoding="${env.ENCODING}" srcdir="${srcZK}" destdir="${buildZK}/WEB-INF/classes" includeAntRuntime="false" deprecation="on">
 			<classpath refid="lib.class.path"/>
 			<include name="**/org/adempiere/webui/**/*.java"/>
 			<include name="**/org/adempiere/webui/apps/from/**/*.java"/>
