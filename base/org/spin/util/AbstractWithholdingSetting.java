@@ -21,6 +21,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.Properties;
 
 import org.adempiere.exceptions.AdempiereException;
@@ -403,15 +404,16 @@ public abstract class AbstractWithholdingSetting {
 		withholding.setWH_Setting_ID(getSetting().getWH_Setting_ID());
 		withholding.setC_DocType_ID();
 		
-		if (document!=null) {
-			if (document instanceof MInvoice) {
-				withholding.setSourceInvoice_ID(document.get_ID());
-				withholding.setC_BPartner_ID(((MInvoice) document).getC_BPartner_ID());
-			}else if (document instanceof MOrder) {
-				withholding.setSourceOrder_ID(document.get_ID());
-				withholding.setC_BPartner_ID(((MOrder) document).getC_BPartner_ID());
-			}
-		}
+		Optional<PO> mayBeSourceDocument = Optional.ofNullable(document);
+		
+		mayBeSourceDocument.ifPresent(sourceDocument -> {
+			if (sourceDocument instanceof MInvoice)
+				withholding.setSourceInvoice_ID(sourceDocument.get_ID());
+			if (sourceDocument instanceof MOrder)
+				withholding.setSourceOrder_ID(sourceDocument.get_ID());
+			
+			withholding.setC_BPartner_ID(sourceDocument.get_ValueAsInt(MWHWithholding.COLUMNNAME_C_BPartner_ID));
+		});
 		
 		//	Description
 		if(!Util.isEmpty(getProcessDescription())) {
@@ -465,7 +467,7 @@ public abstract class AbstractWithholdingSetting {
 		//	Add additional references
 		//	Note that not exist validation for types
 		getReturnValues().entrySet().forEach(value -> {
-			if(log.get_ColumnIndex(value.getKey()) > 0) {
+			if(log.get_ColumnIndex(value.getKey()) >= 0) {
 				if(value.getValue() != null) {
 					log.set_ValueOfColumn(value.getKey(), value.getValue());
 				}
