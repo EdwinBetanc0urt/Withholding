@@ -36,6 +36,9 @@
 		<fileset dir="${adempiere.trunk}/lib">
 			<include name="*.jar"/>
 		</fileset>
+		<fileset dir="${adempiere.trunk}/tools/lib">
+			<include name="*.jar"/>
+		</fileset>
 		<fileset dir="${adempiere.trunk}/serverApps/src/web/WEB-INF/lib">
 			<include name="*.jar"/>
 		</fileset>
