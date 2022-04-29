@@ -59,8 +59,8 @@ jobs:
       #  with:
       #    arguments: build
 
-      - name: Build with gradle
-        run: build gradle
+      - name: Compile gradle
+        run: gradle build
 
       - run: ls
 
