@@ -64,6 +64,11 @@ jobs:
 
       - run: ls
 
+      - name: Prepare Release
+        run: gradle createRelease
+
+      - run: ls
+
       # - uses: actions/upload-artifact@v3
       #  with:
       #    name: Withholding
