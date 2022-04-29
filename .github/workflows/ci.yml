@@ -67,7 +67,12 @@ jobs:
 
       - run: ls build/release/
 
-      # - uses: actions/upload-artifact@v3
-      #  with:
-      #    name: Withholding
-      #    path: build/release/Withholding.zip
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Withholding.zip
+          path: build/release/Withholding.zip
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Withholding.zip.MD5
+          path: build/release/Withholding.zip.MD5
