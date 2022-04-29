@@ -51,6 +51,9 @@ jobs:
           mkdir dependences
           unzip -j Adempiere.zip Adempiere/lib/Adempiere.jar -d dependences/
 
+      # - name: Validate Gradle wrapper
+      #   uses: gradle/wrapper-validation-action@v1.0.4
+
       - name: Compile
         uses: gradle/gradle-build-action@v2.1.5
         with:
@@ -66,9 +69,6 @@ jobs:
           arguments: createRelease
       # - name: Prepare Release
       #   run: gradle createRelease
-
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1.0.4
 
       - run: unzip build/release/Withholding.zip -d build/release/
 
