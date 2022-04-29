@@ -65,7 +65,7 @@ jobs:
       - name: Prepare Release
         run: gradle createRelease
 
-      - run: unzip build/release/Withholding.zip
+      - run: unzip build/release/Withholding.zip -d build/release/
 
       - run: ls build/release/
 
