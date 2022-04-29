@@ -67,7 +67,7 @@ jobs:
 
       - run: unzip build/release/Withholding.zip
 
-      - run: ls
+      - run: ls build/release/
 
       - uses: actions/upload-artifact@v3
         with:
