@@ -52,8 +52,8 @@ jobs:
           mkdir dependences
           unzip -j Adempiere.zip Adempiere/lib/Adempiere.jar -d dependences/Adempiere.jar
 
-      - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1.0.4
+      #- name: Validate Gradle wrapper
+      #  uses: gradle/wrapper-validation-action@v1.0.4
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2.1.5
