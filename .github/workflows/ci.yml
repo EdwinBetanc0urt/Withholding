@@ -2,13 +2,14 @@
 # This file was contributed by EdwinBetancourt@outlook.com
 # from ERP Consultores y Asociados, C.A
 
-name: ADempiere CI
+name: Withholding Continuous Integration
 
 # Controls when the action will run. 
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
   push:
     branches:
+     - main
      - "develop"
      - "bugfix/*"
      - "feature/*"
@@ -24,7 +25,7 @@ on:
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  create-seed:
+  build:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -35,10 +36,10 @@ jobs:
 
       # Ensure a compatible version of java is used
       - name: Setup Java JDK
-        uses: actions/setup-java@v3.2.0
+        uses: actions/setup-java@v3
         with:
+            distribution: 'temurin'
             java-version: '11'
-            java-package: 'temurin'
 
       - name: Get adempiere source
         run: |
