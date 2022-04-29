@@ -57,11 +57,13 @@ jobs:
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2.1.5
         with:
+          gradle-version: 7.1
           arguments: build
 
       - name: Build with Gradle
         uses: gradle/gradle-build-action@v2.1.5
         with:
+          gradle-version: 7.1
           arguments: createRelease
 
       # - name: Compile gradle
