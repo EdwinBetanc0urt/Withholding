@@ -45,7 +45,6 @@ jobs:
         run: |
           download_repo="https://github.com/erpcya/adempiere/releases/download/3.9.3-rs-4.5/Adempiere_393LTS.zip"
           wget $download_repo -c -O Adempiere.zip
-          ls
 
       - name: Uncompress .jar file
         run: |
@@ -55,10 +54,13 @@ jobs:
       #- name: Validate Gradle wrapper
       #  uses: gradle/wrapper-validation-action@v1.0.4
 
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v2.1.5
-        with:
-          arguments: build
+      #- name: Build with Gradle
+      #  uses: gradle/gradle-build-action@v2.1.5
+      #  with:
+      #    arguments: build
+
+      - name: Build with gradle
+        run: build gradle
 
       - run: ls
 
