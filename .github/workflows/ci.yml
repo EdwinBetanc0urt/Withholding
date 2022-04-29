@@ -65,14 +65,24 @@ jobs:
       - name: Prepare Release
         run: gradle createRelease
 
-      - run: ls build/release/
+      - run: unzip build/release/Withholding.zip
+
+      - run: ls
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Withholding.jar
+          path: build/release/Withholding/Withholding.jar
+
+      - uses: actions/upload-artifact@v3
+        with:
+          name: Migration.zip
+          path: build/release/Withholding/migration
 
       - uses: actions/upload-artifact@v3
         with:
           name: Withholding.zip
-          path: build/release/Withholding.zip
-
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Withholding.zip.MD5
-          path: build/release/Withholding.zip.MD5
+          path: |
+            build/release/Withholding/migration
+            build/release/Withholding/Withholding.jar
+            
