@@ -46,7 +46,7 @@ jobs:
           download_repo="https://github.com/erpcya/adempiere/releases/download/3.9.3-rs-4.5/Adempiere_393LTS.zip"
           wget $download_repo -c -O Adempiere.zip
 
-      - name: Uncompress .jar file
+      - name: Uncompress Adempiere.jar file
         run: |
           mkdir dependences
           unzip -j Adempiere.zip Adempiere/lib/Adempiere.jar -d dependences/
@@ -62,7 +62,7 @@ jobs:
       # - name: Compile
       #   run: gradle build
 
-      - name: Prepare Release
+      - name: Prepare Dist Release
         uses: gradle/gradle-build-action@v2.1.5
         with:
           gradle-version: 7.1
@@ -70,21 +70,23 @@ jobs:
       # - name: Prepare Release
       #   run: gradle createRelease
 
-      - run: unzip build/release/Withholding.zip -d build/release/
+      - name: Uncompress binaries
+        run: unzip build/release/Withholding.zip -d build/release/
 
-      - run: ls build/release/
-
-      - uses: actions/upload-artifact@v3
+      - name: Upload Withholding.jar
+        uses: actions/upload-artifact@v3
         with:
           name: Withholding.jar
           path: build/release/Withholding.jar
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload migration folder
+        uses: actions/upload-artifact@v3
         with:
-          name: Migration.zip
+          name: migration.zip
           path: build/release/migration
 
-      - uses: actions/upload-artifact@v3
+      - name: Upload dist files
+        uses: actions/upload-artifact@v3
         with:
           name: Withholding.zip
           path: |
