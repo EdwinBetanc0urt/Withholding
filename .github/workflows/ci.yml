@@ -62,12 +62,12 @@ jobs:
       - name: Compile gradle
         run: gradle build
 
-      - run: ls
+      - run: ls build
 
       - name: Prepare Release
         run: gradle createRelease
 
-      - run: ls
+      - run: ls build
 
       # - uses: actions/upload-artifact@v3
       #  with:
