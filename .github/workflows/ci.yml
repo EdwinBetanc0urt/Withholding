@@ -45,6 +45,7 @@ jobs:
         run: |
           download_repo="https://github.com/erpcya/adempiere/releases/download/3.9.3-rs-4.5/Adempiere_393LTS.zip"
           wget $download_repo -c -O Adempiere.zip
+          ls
 
       - name: Uncompress .jar file
         run: unzip -j Adempiere.zip Adempiere/lib/Adempiere.jar -d dependences/Adempiere.jar
