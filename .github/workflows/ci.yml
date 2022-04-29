@@ -72,17 +72,16 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: Withholding.jar
-          path: build/release/Withholding/Withholding.jar
+          path: build/release/Withholding.jar
 
       - uses: actions/upload-artifact@v3
         with:
           name: Migration.zip
-          path: build/release/Withholding/migration
+          path: build/release/migration
 
-      - uses: actions/upload-artifact@v3
-        with:
-          name: Withholding.zip
-          path: |
-            build/release/Withholding/migration
-            build/release/Withholding/Withholding.jar
-            
+      #- uses: actions/upload-artifact@v3
+      #  with:
+      #    name: Withholding.zip
+      #    path: |
+      #      build/release/migration
+      #      build/release/Withholding.jar
