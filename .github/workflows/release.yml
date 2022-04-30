@@ -2,7 +2,7 @@
 # This file was contributed by EdwinBetancourt@outlook.com
 # from ERP Consultores y Asociados, C.A
 
-name: ADempiere Publish
+name: Withholding Publish
 
 on:
   release:
@@ -88,11 +88,11 @@ jobs:
 
       - run: ls
 
-      # - name: Compress files for application dist
-      #   uses: TheDoctor0/zip-release@0.6.0
-      #   with:
-      #     filename: 'Withholding.zip'
-      #     path: './'
+      - name: Compress files for application dist
+        uses: TheDoctor0/zip-release@0.6.2
+        with:
+          filename: 'Withholding.zip'
+          path: './'
 
       - name: Publish binary in repository
         uses: skx/github-action-publish-binaries@master
