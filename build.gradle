@@ -7,8 +7,18 @@ repositories {
     maven {
 		url = "https://maven.pkg.github.com/erpcya/Repository"
         credentials {
-        	username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
+			username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
             password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+		}
+	}
+	if (System.getenv("GITHUB_TOKEN")) {
+		maven {
+			name = "GitHubPackages"
+			url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY_OWNER") + "/" + System.getenv("GITHUB_REPOSITORY")
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
+			}
 		}
 	}
 }
@@ -21,9 +31,9 @@ def entityType = 'WHH'
 
 sourceSets {
     main {
-         java {
+		java {
             srcDirs = ['base']
-         }
+		}
     }
 }
 
@@ -33,9 +43,11 @@ dependencies {
 
 jar {
     manifest {
-        attributes('Implementation-Title': project.name,
-                   'Implementation-Version': project.version, 
-                   "EntityType": entityType)
+		attributes(
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version,
+			"EntityType": entityType
+		)
     }
 }
 
@@ -50,11 +62,11 @@ task createRelease(type: Zip) {
    destinationDir(file('build/release/'))
    doLast {
         file('build/release/')
-        	.listFiles({file -> file.isFile()} as FileFilter).sort()
-        	.each { File file ->
-            ant.checksum file: file
-        }
-   	}
+			.listFiles({file -> file.isFile()} as FileFilter).sort()
+			.each { File file ->
+				ant.checksum file: file
+			}
+	}
 }
 
 publishing {
@@ -66,17 +78,27 @@ publishing {
                 password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
             }
         }
+		if (System.getenv("GITHUB_TOKEN")) {
+			maven {
+				name = "GitHubPackages"
+				url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY_OWNER") + "/" + System.getenv("GITHUB_REPOSITORY")
+				credentials {
+					username = System.getenv("GITHUB_ACTOR")
+					password = System.getenv("GITHUB_TOKEN")
+				}
+			}
+		}
     }
     publications {
 		mavenJava(MavenPublication) {
-        	groupId 'org.erpya.adempiere.tools'
+			groupId 'org.erpya.adempiere.tools'
             artifactId 'withholding'
             version libraryVersion
-           	artifact jar
-           	pom {
+			artifact jar
+			pom {
                 name = 'ADempiere Withholding Engine'
                 description = 'This library have all related to Withholding Engine'
-                 url = 'https://www.erpya.com/'
+				url = 'https://www.erpya.com/'
                 licenses {
                     license {
                         name = 'GNU General Public License v3.0'
