@@ -77,11 +77,11 @@ jobs:
 
       - run: ls
 
-      - name: Compress files for application dist
-        uses: TheDoctor0/zip-release@0.6.0
-        with:
-          filename: 'Withholding.zip'
-          path: './'
+      # - name: Compress files for application dist
+      #   uses: TheDoctor0/zip-release@0.6.0
+      #   with:
+      #     filename: 'Withholding.zip'
+      #     path: './'
 
       - name: Publish binary in repository
         uses: skx/github-action-publish-binaries@master

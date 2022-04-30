@@ -28,14 +28,14 @@ on:
 
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  build-dist:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         java: [ '11' ]
         os: [ 'ubuntu-latest' ] # , 'macos-latest', 'windows-latest' ]
 
-    name: Run on ${{ matrix.os }} with java ${{ matrix.java }} version
+    name: Run on ${{ matrix.os }} with java ${{ matrix.java }}
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
