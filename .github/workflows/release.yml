@@ -45,6 +45,12 @@ jobs:
           gradle-version: 7.1
           arguments: build
 
+      - name: Prepare Dist Release
+        uses: gradle/gradle-build-action@v2.1.5
+        with:
+          gradle-version: 7.1
+          arguments: createRelease
+
       - name: Uncompress build binaries
         run: unzip build/release/Withholding.zip -d build/release/
 
@@ -70,7 +76,7 @@ jobs:
 
   # Publish dist binaries to application
   publish-dist:
-    name: Upload ADempiere-Vue binaries
+    name: Upload Withholding dist binaries
     needs:
       - build-withholding
     runs-on: ubuntu-latest
