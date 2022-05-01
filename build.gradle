@@ -1,26 +1,7 @@
-apply plugin: 'java-library'
-apply plugin: 'maven-publish'
 
-repositories {
-    mavenLocal()
-    mavenCentral()
-    // maven {
-	// 	url = "https://maven.pkg.github.com/erpcya/Repository"
-    //     credentials {
-	// 		username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
-    //         password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
-	// 	}
-	// }
-	if (System.getenv("GITHUB_TOKEN")) {
-		maven {
-			name = "GitHubPackages"
-			url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY_OWNER") + "/" + System.getenv("GITHUB_REPOSITORY")
-			credentials {
-				username = System.getenv("GITHUB_ACTOR")
-				password = System.getenv("GITHUB_TOKEN")
-			}
-		}
-	}
+plugins {
+    id 'java-library'
+    id 'maven-publish'
 }
 
 sourceCompatibility = 1.8
@@ -38,7 +19,10 @@ sourceSets {
 }
 
 dependencies {
-    compileOnly fileTree(dir: 'dependences', include: ['*.jar'])
+	compileOnly fileTree(
+		dir: 'dependences',
+		include: ['*.jar']
+	)
 }
 
 jar {
@@ -71,21 +55,19 @@ task createRelease(type: Zip) {
 
 publishing {
     repositories {
-        maven {
-            url = "https://maven.pkg.github.com/erpcya/Repository"
-            credentials {
-                username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
-                password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
-            }
-        }
-		if (System.getenv("GITHUB_TOKEN")) {
-			maven {
-				name = "GitHubPackages"
-				url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY_OWNER") + "/" + System.getenv("GITHUB_REPOSITORY")
-				credentials {
-					username = System.getenv("GITHUB_ACTOR")
-					password = System.getenv("GITHUB_TOKEN")
-				}
+        // maven {
+        //     url = "https://maven.pkg.github.com/erpcya/Repository"
+        //     credentials {
+        //         username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
+        //         password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+        //     }
+        // }
+		maven {
+			name = "GitHubPackages"
+			url = "https://maven.pkg.github.com/EdwinBetanc0urt/Withholding"
+			credentials {
+				username = System.getenv("GITHUB_ACTOR")
+				password = System.getenv("GITHUB_TOKEN")
 			}
 		}
     }
