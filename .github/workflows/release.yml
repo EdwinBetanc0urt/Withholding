@@ -51,17 +51,6 @@ jobs:
           gradle-version: 7.1
           arguments: createRelease
 
-      # - name: Publish on GH Packages
-      #   uses: gradle/gradle-build-action@v2.1.5
-      #   with:
-      #     gradle-version: 7.1
-      #     arguments: publish
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
-      #     GITHUB_ACTOR: ${{ github.actor }}
-      #     # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-
       - name: Uncompress build binaries
         run: unzip build/release/Withholding.zip -d build/release/
 
@@ -114,7 +103,6 @@ jobs:
           name: Adempiere.jar
           path: dependences/
 
-      - run: ls dependences
       - name: Publish on GH Packages
         uses: gradle/gradle-build-action@v2.1.5
         with:
@@ -125,7 +113,7 @@ jobs:
           # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
           GITHUB_ACTOR: ${{ github.actor }}
           # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-      - run: ls
+      - run: ls build
 
   # Publish dist binairy and migration
   publish-all:
