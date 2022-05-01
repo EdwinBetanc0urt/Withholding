@@ -111,8 +111,6 @@ jobs:
           arguments: publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
-          # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
       - run: ls
       - run: ls build/publications
       - run: ls build/generated

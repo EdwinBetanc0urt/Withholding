@@ -7,7 +7,7 @@ plugins {
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
-def libraryVersion = System.properties['VERSION'] ?: '1.3.3'
+def libraryVersion = System.properties['VERSION'] ?: '1.3.4'
 def entityType = 'WHH'
 
 sourceSets {
@@ -55,16 +55,18 @@ task createRelease(type: Zip) {
 
 publishing {
     repositories {
-        maven {
-            url = "https://maven.pkg.github.com/erpcya/Repository"
-            credentials {
-                username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
-                password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+		if (System.getenv("GITHUB_DEPLOY_USER") && System.getenv("GITHUB_DEPLOY_TOKEN")) {
+			maven {
+				url = "https://maven.pkg.github.com/erpcya/Repository"
+				credentials {
+					username = System.properties['deploy.user'] ?: System.getenv("GITHUB_DEPLOY_USER")
+					password = System.properties['deploy.token'] ?: System.getenv("GITHUB_DEPLOY_TOKEN")
+				}
             }
         }
 		maven {
 			name = "GitHubPackages"
-			url = "https://maven.pkg.github.com/" + "/" + System.getenv("GITHUB_REPOSITORY")
+			url = "https://maven.pkg.github.com/" + System.getenv("GITHUB_REPOSITORY")
 			credentials {
 				username = System.getenv("GITHUB_ACTOR")
 				password = System.getenv("GITHUB_TOKEN")
