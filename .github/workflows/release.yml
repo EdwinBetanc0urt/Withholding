@@ -55,7 +55,7 @@ jobs:
         uses: gradle/gradle-build-action@v2.1.5
         with:
           gradle-version: 7.1
-          arguments: createRelease
+          arguments: publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
