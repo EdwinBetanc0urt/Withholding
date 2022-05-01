@@ -6,6 +6,12 @@ name: Withholding Continuous Integration
 
 on:
   # Triggers the workflow on push or pull request events but only for the develop branch
+  # workflow_call:
+  #   outputs:
+  #     firstword:
+  #       description: "The first output string"
+  #       value: ${{ jobs.build-dist.outputs.output1 }}
+
   push:
     branches:
       - main
@@ -80,19 +86,19 @@ jobs:
       - name: Uncompress build binaries
         run: unzip build/release/Withholding.zip -d build/release/
 
-      - name: Upload Withholding.jar
+      - name: Artifact upload Withholding.jar
         uses: actions/upload-artifact@v3
         with:
           name: Withholding.jar
           path: build/release/Withholding.jar
 
-      - name: Upload migration folder
+      - name: Artifact upload migration folder
         uses: actions/upload-artifact@v3
         with:
           name: migration.zip
           path: build/release/migration
 
-      - name: Upload dist files
+      - name: Artifact upload binay and migration
         uses: actions/upload-artifact@v3
         with:
           name: Withholding.zip
