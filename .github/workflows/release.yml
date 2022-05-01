@@ -54,19 +54,19 @@ jobs:
       - name: Uncompress build binaries
         run: unzip build/release/Withholding.zip -d build/release/
 
-      - name: Upload Withholding.jar
+      - name: Artifact upload Withholding.jar
         uses: actions/upload-artifact@v3
         with:
           name: Withholding.jar
           path: build/release/Withholding.jar
 
-      - name: Upload migration folder
+      - name: Artifact upload migration folder
         uses: actions/upload-artifact@v3
         with:
           name: migration.zip
           path: build/release/migration
 
-      - name: Upload dist files
+      - name: Artifact upload dist files and migration
         uses: actions/upload-artifact@v3
         with:
           name: Withholding.zip
@@ -74,19 +74,17 @@ jobs:
             build/release/migration
             build/release/Withholding.jar
 
-  # Publish dist binaries to application
-  publish-dist:
-    name: Upload Withholding dist binaries
+  # Publish dist binairy and migration
+  publish-all:
+    name: GH Publish Withholding dist binary and migration
     needs:
       - build-withholding
     runs-on: ubuntu-latest
     steps:
-      - name: Download build dist app
+      - name: Download build all
         uses: actions/download-artifact@v2
         with:
           name: Withholding.zip
-
-      - run: ls
 
       - name: Compress files for application dist
         uses: TheDoctor0/zip-release@0.6.2
@@ -100,3 +98,44 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           args: 'Withholding.zip'
+
+  # Publish dist binaries to application
+  publish-dist:
+    name: GH Publish Withholding dist binaries
+    needs:
+      - build-withholding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build dist app
+        uses: actions/download-artifact@v2
+        with:
+          name: Withholding.jar
+
+      - run: ls
+      - name: Publish binary in repository
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'Withholding.jar'
+
+  # Publish dist binaries to application
+  publish-migration:
+    name: GH Publish Withholding migration folder
+    needs:
+      - build-withholding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download build dist app
+        uses: actions/download-artifact@v2
+        with:
+          name: migration.zip
+
+      - run: ls
+
+      - name: Publish binary in repository
+        uses: skx/github-action-publish-binaries@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: 'migration.zip'
