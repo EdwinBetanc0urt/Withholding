@@ -51,16 +51,16 @@ jobs:
           gradle-version: 7.1
           arguments: createRelease
 
-      - name: Publish on GH Packages
-        uses: gradle/gradle-build-action@v2.1.5
-        with:
-          gradle-version: 7.1
-          arguments: publish
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
-          GITHUB_ACTOR: ${{ github.actor }}
-          # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+      # - name: Publish on GH Packages
+      #   uses: gradle/gradle-build-action@v2.1.5
+      #   with:
+      #     gradle-version: 7.1
+      #     arguments: publish
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
+      #     GITHUB_ACTOR: ${{ github.actor }}
+      #     # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
 
       - name: Uncompress build binaries
         run: unzip build/release/Withholding.zip -d build/release/
@@ -92,40 +92,40 @@ jobs:
             build/release/Withholding.jar
 
   # Publish dist binary
-  # publish-ghpk:
-  #   name: GH Packages Publish
-  #   needs: build-withholding
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check out the repo
-  #       uses: actions/checkout@v2
+  publish-ghpk:
+    name: GH Packages Publish
+    needs: build-withholding
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
 
-  #     - name: Set up Java JDK
-  #       uses: actions/setup-java@v3
-  #       with:
-  #           distribution: 'temurin'
-  #           java-package: 'jdk'
-  #           java-version: '11'
-  #           architecture: x64
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+            distribution: 'temurin'
+            java-package: 'jdk'
+            java-version: '11'
+            architecture: x64
 
-  #     - name: Download Adempiere.jar
-  #       uses: actions/download-artifact@v3
-  #       with:
-  #         name: Adempiere.jar
-  #         path: dependences/
+      - name: Download Adempiere.jar
+        uses: actions/download-artifact@v3
+        with:
+          name: Adempiere.jar
+          path: dependences/
 
-  #     - run: ls dependences
-  #     - name: Publish on GH Packages
-  #       uses: gradle/gradle-build-action@v2.1.5
-  #       with:
-  #         gradle-version: 7.1
-  #         arguments: publish
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
-  #         GITHUB_ACTOR: ${{ github.actor }}
-  #         # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
-  #     - run: ls
+      - run: ls dependences
+      - name: Publish on GH Packages
+        uses: gradle/gradle-build-action@v2.1.5
+        with:
+          gradle-version: 7.1
+          arguments: publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # GITHUB_REPOSITORY_OWNER: ${{ secrets.GITHUB_REPOSITORY_OWNER }}
+          GITHUB_ACTOR: ${{ github.actor }}
+          # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
+      - run: ls
 
   # Publish dist binairy and migration
   publish-all:
