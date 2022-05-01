@@ -100,6 +100,14 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v2
 
+      - name: Set up Java JDK
+        uses: actions/setup-java@v3
+        with:
+            distribution: 'temurin'
+            java-package: 'jdk'
+            java-version: ${{ matrix.java }}
+            architecture: x64
+
       - name: Download Adempiere.jar
         uses: actions/download-artifact@v3
         with:
@@ -118,7 +126,6 @@ jobs:
           GITHUB_ACTOR: ${{ github.actor }}
           # GITHUB_REPOSITORY: ${{ secrets.GITHUB_REPOSITORY }}
       - run: ls
-
 
   # Publish dist binairy and migration
   publish-all:
